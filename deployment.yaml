@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: citus-deployment
+  name: citus-coordinator-deployment
   labels:
-    app: citus-master
+    app: citus-coordinator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: citus-master
+      app: citus-coordinator
   template:
     metadata:
       labels:
-        app: citus-master
+        app: citus-coordinator
     spec:
       containers:
         - name: citus-master
@@ -20,3 +20,30 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: mypassword
+          ports:
+            - containerPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citus-worker-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: citus-worker
+  template:
+    metadata:
+      labels:
+        app: citus-worker
+    spec:
+      containers:
+        - name: citus-worker
+          image: citusdata/citus
+          env:
+            - name: POSTGRES_PASSWORD
+              value: mypassword
+            - name: PGCLUSTER_RESOLVE_WORKERS
+              value: "true"
+          ports:
+            - containerPort: 5432
