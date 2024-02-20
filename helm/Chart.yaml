@@ -1,0 +1,5 @@
+apiVersion: v2
+name: citusdb
+version: 3.0.0
+hooks:
+  post-install: post-install-citus

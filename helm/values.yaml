@@ -1,0 +1,8 @@
+coordinator:
+  replicas: 1
+  password: mypassword
+worker:
+  replicas: 2
+  password: mypassword
+job:
+  password: mypassword
