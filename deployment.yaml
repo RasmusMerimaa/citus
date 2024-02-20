@@ -20,14 +20,17 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: mypassword
+            - name: PGCLUSTER_WORKER_PORT
+              value: "5432"
           ports:
             - containerPort: 5432
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: citus-worker-deployment
+  name: citus-worker-statefulset
 spec:
+  serviceName: citus-worker-service
   replicas: 2
   selector:
     matchLabels:
