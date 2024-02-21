@@ -1,5 +1,8 @@
 apiVersion: v2
 name: citusdb
-version: 3.0.0
+version: 3.1.0
 hooks:
-  post-install: post-install-citus
+  - name: post-install-citus
+    events:
+      - post-install
+    manifest: jobs.yaml

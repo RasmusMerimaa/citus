@@ -30,3 +30,10 @@ SELECT * FROM citus_add_node('citus-worker-statefulset-0.citus-worker-service', 
 SELECT * FROM citus_add_node('citus-worker-statefulset-1.citus-worker-service', 5432);
 
 SELECT * FROM citus_get_active_worker_nodes();
+
+
+# Troubleshooting copypasta
+kubectl create -f .\templates\jobs.yaml
+kubectl delete -f .\templates\jobs.yaml
+minikube delete --all
+minikube start

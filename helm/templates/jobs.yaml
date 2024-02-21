@@ -2,6 +2,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: citus-setup-job
+  annotations:
+    "helm.sh/hook": post-install
 spec:
   template:
     spec:
@@ -14,8 +16,8 @@ spec:
             - >
               apt-get update && apt-get install -y postgresql-client &&
               PGPASSWORD=mypassword psql -h citus-coordinator-service -U postgres -c "
-              SELECT * FROM citus_add_node('citus-worker-statefulset-0.citus-worker-service', 5432);
-              SELECT * FROM citus_add_node('citus-worker-statefulset-1.citus-worker-service', 5432);
+              SELECT * FROM citus_add_node('citus-worker-statefulset-0', 5432);
+              SELECT * FROM citus_add_node('citus-worker-statefulset-1', 5432);
               SELECT * FROM citus_get_active_worker_nodes();
               "
       restartPolicy: Never
