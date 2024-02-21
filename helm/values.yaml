@@ -5,4 +5,5 @@ worker:
   replicas: 2
   password: mypassword
 job:
+  enabled: true
   password: mypassword
